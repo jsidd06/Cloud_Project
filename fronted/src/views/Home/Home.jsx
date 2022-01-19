@@ -12,17 +12,7 @@ function Home() {
         onChange={(event) => console.log(setSearchTerm(event.target.value))}
       />
       {data
-        .filter((item) => {
-          if (searchTerm === '') {
-            return item
-          } else if (
-            item.name
-              .toLocaleLowerCase()
-              .includes(searchTerm.toLocaleLowerCase())
-          ) {
-            return item
-          } 
-        })
+        .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
         .map((item, index) => {
           return (
             <div key={index}>
