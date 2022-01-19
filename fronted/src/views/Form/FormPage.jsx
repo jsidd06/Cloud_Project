@@ -12,12 +12,15 @@ import {
   CardHeader,
   CardTitle,
   Label,
+  Form,
 } from 'reactstrap'
 import { formFields } from '../../fake-data'
+import { Controller, useForm } from 'react-hook-form'
 
 function FormPage() {
   const [formData, setFormData] = React.useState([])
-  console.log(formData)
+  const { control, handleSubmit,  } = useForm()
+  const onSubmit = (data) => console.log(data)
   return (
     <Container className="mt-4">
       <Row>
@@ -26,17 +29,25 @@ function FormPage() {
             <CardHeader>
               <CardTitle>Selected Form</CardTitle>
             </CardHeader>
-            <CardBody>
-              {formData.map((fd, i) => (
-                <FormGroup key={i}>
-                  <Label>{fd.label}</Label>
-                  <Input type={fd.type} />
-                </FormGroup>
-              ))}
-            </CardBody>
-            <CardFooter>
-              <Button>Submit</Button>
-            </CardFooter>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <CardBody>
+                {formData.map((fd, i) => (
+                  <FormGroup key={i}>
+                    <Label>{fd.label}</Label>
+                    <Controller
+                      name={fd.name}
+                      render={({ field }) => (
+                        <Input {...field} type={fd.type} />
+                      )}
+                      control={control}
+                    />
+                  </FormGroup>
+                ))}
+              </CardBody>
+              <CardFooter>
+                <Button>Submit</Button>
+              </CardFooter>
+            </Form>
           </Card>
         </Col>
         <Col sm={12} md={6}>
@@ -58,6 +69,7 @@ function FormPage() {
                             formFields[index],
                           ])
                         } else {
+                          setFormData([])
                           setFormData(
                             formData.filter((fd) => fd.id !== field.id)
                           )
