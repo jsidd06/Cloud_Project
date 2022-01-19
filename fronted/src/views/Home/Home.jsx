@@ -5,9 +5,12 @@ function Home() {
   
   return (
     <Container>
-      {data.map((user) => (
-      <div>{user.name}</div>
-    ))}
+      {data.map((user,index) => (
+        <>
+          <div key={index}>{user.name}</div>
+          <div>{user.age}</div>
+        </>
+      ))}
     </Container>
   )
 }
