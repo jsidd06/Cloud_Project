@@ -58,7 +58,9 @@ function FormPage() {
                             formFields[index],
                           ])
                         } else {
-                          setFormData([])
+                          setFormData(
+                            formData.filter((fd) => fd.id !== field.id)
+                          )
                         }
                       }}
                     />
