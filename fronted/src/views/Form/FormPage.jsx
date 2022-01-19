@@ -11,6 +11,7 @@ import {
   Button,
   CardHeader,
   CardTitle,
+  Label,
 } from 'reactstrap'
 import { formFields } from '../../fake-data'
 
@@ -26,9 +27,12 @@ function FormPage() {
               <CardTitle>Selected Form</CardTitle>
             </CardHeader>
             <CardBody>
-              <FormGroup>
-                <Input type="text" placeholder="Search.." />
-              </FormGroup>
+              {formData.map((fd, i) => (
+                <FormGroup key={i}>
+                  <Label>{fd.label}</Label>
+                  <Input type={fd.type} />
+                </FormGroup>
+              ))}
             </CardBody>
             <CardFooter>
               <Button>Submit</Button>
@@ -53,6 +57,8 @@ function FormPage() {
                             ...preValue,
                             formFields[index],
                           ])
+                        } else {
+                          setFormData([])
                         }
                       }}
                     />
