@@ -19,8 +19,18 @@ import { Controller, useForm } from 'react-hook-form'
 
 function FormPage() {
   const [formData, setFormData] = React.useState([])
-  const { control, handleSubmit,  } = useForm()
-  const onSubmit = (data) => console.log(data)
+  const { control, handleSubmit, setValue } = useForm()
+  const onSubmit = (data) => {
+    for (const key in data) {
+      if (Object.hasOwnProperty.call(data, key)) {
+        const element = data[key]
+        if (!element) {
+          delete data[key]
+        }
+      }
+    }
+    console.log(data)
+  }
   return (
     <Container className="mt-4">
       <Row>
@@ -69,7 +79,7 @@ function FormPage() {
                             formFields[index],
                           ])
                         } else {
-                          setFormData([])
+                          setValue(field.name, '')
                           setFormData(
                             formData.filter((fd) => fd.id !== field.id)
                           )
