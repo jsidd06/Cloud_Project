@@ -9,10 +9,12 @@ function Home() {
       <Input
         placeholder="Search.."
         type="text"
-        onChange={(event) => console.log(setSearchTerm(event.target.value))}
+        onChange={(event) => setSearchTerm(event.target.value)}
       />
       {data
-        .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        .filter((item) =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
         .map((item, index) => {
           return (
             <div key={index}>

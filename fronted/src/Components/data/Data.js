@@ -11,6 +11,6 @@ const data = [
     id: 3,
     name: 'Jack Doe',
     age: 25,
-  }
+  },
 ]
 export default data
