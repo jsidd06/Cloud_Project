@@ -1,16 +1,24 @@
 import React from 'react'
-import { Container } from 'reactstrap'
+import { useState } from 'react'
+import { Container, Input } from 'reactstrap'
 import data from '../../Components/data/Data'
 function Home() {
-  
+  const [search, setSearch] = useState("")
   return (
     <Container>
-      {data.map((user,index) => (
-        <>
-          <div key={index}>{user.name}</div>
-          <div>{user.age}</div>
-        </>
-      ))}
+      <Input
+        placeholder="Search"
+        type="text"
+        onChange={(event) => console.log(setSearch(event.target.value))}
+      />
+
+      {data.map((item, index) =>  { return (
+        <div key={index}>
+          <h1>{item.name}</h1>
+          <p>{item.age}</p>
+        </div>
+      ) 
+      })}
     </Container>
   )
 }
