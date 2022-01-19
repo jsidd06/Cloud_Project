@@ -1,19 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
-const div = {
-  textAlign: "center",
-  fontSize: "3rem",
-  marginTop: "10%",
-};
-
+import React from 'react'
+import { Container } from 'reactstrap'
+import data from '../../Components/data/Data'
 function Home() {
+  
   return (
-    <div style={div}>
-      <h1 style={div}>Welcome to the Home Page</h1>
-      <Link to="/form">Go</Link>
-    </div>
-  );
+    <Container>
+      {data.map((user) => (
+      <div>{user.name}</div>
+    ))}
+    </Container>
+  )
 }
 
-export default Home;
+export default Home

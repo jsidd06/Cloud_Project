@@ -1,10 +1,13 @@
 import React from 'react'
 import { Button, Col, Container, FormGroup, Input, Label, Row } from 'reactstrap'
-
+import DynamicForm from './DynamicForm'
+import Data from '../../Components/data/Data'
 function FormPage() {
   return (
     <Container style={{textAlign: 'center'}}>
       <h1>Add Your Order List</h1>
+      <DynamicForm />
+      <Data />
       <FormGroup style={{marginTop:10}}>
         <Row className="mt-3" >
           <Col md="6"><Label>Full Name</Label>
