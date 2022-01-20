@@ -2,14 +2,26 @@ export const formFields = [
   {
     id: 1,
     type: 'text',
-    name: 'name',
-    label: 'Full Name',
+    name: 'username',
+    label: 'User Full Name',
   },
   {
     id: 2,
     type: 'email',
     name: 'email',
-    label: 'Email',
+    label: 'User Email Address',
+  },
+  {
+    id: 14,
+    type: 'number',
+    name: 'phone',
+    label: 'User Phone Number',
+  },
+  {
+    id: 15,
+    type: 'text',
+    name: 'upi_id',
+    label: 'User UPI ID',
   },
   {
     id: 3,
@@ -74,5 +86,56 @@ export const formFields = [
     type: 'number',
     name: 'number of confirm order',
     label: 'Number of Confirm Order',
+  },{
+    id: 16,
+    type: 'text',
+    name: 'address',
+    label: 'Address',
+  },
+  {
+    id: 17,
+    type: 'text',
+    name: 'city',
+    label: 'City',
+  },{
+    id: 18,
+    type: 'text',
+    name: 'state',
+    label: 'State',
+  },{
+    id: 19,
+    type: 'text',
+    name: 'country',
+    label: 'Country',
+  },{
+    id: 20,
+    type: 'number',
+    name: 'zip_code',
+    label: 'Zip code',
+  },{
+    id: 21,
+    type: 'text',
+    name: 'payment_method',
+    label: 'Payment Method',
+  },{
+    id: 22,
+    type: 'text',
+    name: 'payment_status',
+    label: 'Payment Status',
+  },{
+    id: 23,
+    type: 'date',
+    name: 'payment_date',
+    label: 'Payment Date',
+  },{
+    id: 24,
+    type: 'text',
+    name: 'pin_code',
+    label: 'Pin code',
+  },{
+    id: 25,
+    type: 'date',
+    name: 'date',
+    label: 'Date',
   }
 ]
