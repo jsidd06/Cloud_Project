@@ -33,6 +33,7 @@ function FormPage() {
   }
   return (
     <Container className="mt-4">
+      <h1 style={{textAlign: 'center'}} className="mt-5 mb-5">Select your Business Data List</h1>
       <Row>
         <Col sm={12} md={6}>
           <Card>
