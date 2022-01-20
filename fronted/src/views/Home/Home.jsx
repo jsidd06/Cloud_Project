@@ -1,30 +1,10 @@
-import React from 'react'
-import { useState } from 'react'
-import { Container, Input } from 'reactstrap'
-import data from '../../Components/data/Data'
+import React from 'react';
+import {Link} from "react-router-dom"
 function Home() {
-  const [searchTerm, setSearchTerm] = useState('')
-  return (
-    <Container>
-      <Input
-        placeholder="Search.."
-        type="text"
-        onChange={(event) => setSearchTerm(event.target.value)}
-      />
-      {data
-        .filter((item) =>
-          item.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .map((item, index) => {
-          return (
-            <div key={index}>
-              <h1>{item.name}</h1>
-              <p>{item.age}</p>
-            </div>
-          )
-        })}
-    </Container>
-  )
+  return <div className="mt-5 p-2" style={{textAlign: 'center'}}>
+    <h1>Welcome to Add Your Own Business List</h1>
+    <Link className="btn btn-primary" to='/form'>Click here to Start</Link>
+  </div>;
 }
 
-export default Home
+export default Home;
