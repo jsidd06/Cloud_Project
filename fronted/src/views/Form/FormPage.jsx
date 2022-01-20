@@ -40,7 +40,9 @@ function FormPage() {
               <CardTitle>Selected Form</CardTitle>
             </CardHeader>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <CardBody>
+              <CardBody
+                style={{ minHeight: 450, maxHeight: 450, overflowY: 'auto' }}
+              >
                 {formData.map((fd, i) => (
                   <FormGroup key={i}>
                     <Label>{fd.label}</Label>
@@ -60,7 +62,7 @@ function FormPage() {
             </Form>
           </Card>
         </Col>
-        <Col sm={12} md={6}>
+        <Col sm={12} md={6} style={{ maxHeight: 560, overflowY: 'auto' }}>
           {formFields.map((field, index) => (
             <Card key={index} className="m-2 p-4">
               <CardBody>
