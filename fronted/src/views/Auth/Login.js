@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Card,
   CardHeader,
@@ -12,8 +12,12 @@ import {
   Label,
 } from 'reactstrap'
 import Layout from '../../Components/data/Layout'
+import db from '../../configs/firebase'
 
 function Login() {
+  useEffect(() => {
+    console.log(db.collection())
+  }, [])
   return (
     <Layout>
       <Card>
