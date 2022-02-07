@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import { generateToken } from "./auth/jwt.js";
 
 const app = express();
 
@@ -39,7 +40,14 @@ app.post("/login", (req, res) => {
       res.send(err);
     } else if (data) {
       if (data.password === password) {
-        res.send(data);
+        const token = generateToken(data);
+        res.status(200).json({
+          id: data._id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          username: data.username,
+          token,
+        });
       } else {
         res.send("wrong password");
       }
