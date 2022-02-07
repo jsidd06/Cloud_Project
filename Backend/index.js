@@ -42,7 +42,7 @@ const newSchema2 = new mongoose.Schema({
     password: String,
 })
 
-const signUpUser = mongoose.model("signUpUser", newSchema);
+const signUpUser = mongoose.model("signUpUser", newSchema2);
 
 app.post('/signup', (req, res) => {
     new signUpUser ({ firstName: req.body.firstName, lastName: req.body.lastName, username: req.body.username, password: req.body.password }).save(function(err){
