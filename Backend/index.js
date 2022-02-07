@@ -16,6 +16,25 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
     console.log('Error: ', err);
 })
 
+// set the schema for mongoose
+const newSchema = new mongoose.Schema({
+    username: String,
+    password: String,
+})
+
+const loginUser = mongoose.model('loginUser', newSchema);
+
+app.post('/login', (req, res) => {
+    new loginUser ({ username: req.body.username, password: req.body.password }).save(function(err){
+        if(!err){
+            res.send('Successfully login');
+        }else{
+            res.send("error login");
+        }
+    })
+})
+
+
 app.listen(5000, () => {
     console.log('future f*ck is running on Port 5000')
 })

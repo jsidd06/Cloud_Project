@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Card,
   CardHeader,
@@ -11,8 +11,25 @@ import {
   Button,
   Label,
 } from 'reactstrap'
+import Axios from '../../config/Axios'
 import Layout from '../../Components/data/Layout'
 function Login() {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [loginData,setDataLogin] = useState('')
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    Axios.post('/login', {
+      username,
+      password,
+    }).then((res) => {
+      console.log(res)
+      setDataLogin(res.data)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
   return (
     <Layout>
       <Card>
@@ -23,15 +40,15 @@ function Login() {
           <CardBody>
             <FormGroup>
               <Label>Username</Label>
-              <Input type="username" />
+              <Input type="username" onChange={(e) => setUsername(e.target.value)} />
             </FormGroup>
             <FormGroup>
               <Label>Password</Label>
-              <Input type="password" />
+              <Input type="password" onChange={(e) => setPassword(e.target.value)}/>
             </FormGroup>
           </CardBody>
           <CardFooter>
-            <Button>Login</Button>
+            <Button type="submit" onClick={handleSubmit}>Login</Button>
           </CardFooter>
         </Form>
       </Card>
