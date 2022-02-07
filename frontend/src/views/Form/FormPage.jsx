@@ -16,6 +16,7 @@ import {
 } from 'reactstrap'
 import { formFields } from '../../fake-data'
 import { Controller, useForm } from 'react-hook-form'
+import Axios from '../../config/Axios'
 
 function FormPage() {
   const [formData, setFormData] = React.useState([])
@@ -30,10 +31,23 @@ function FormPage() {
       }
     }
     console.log(data)
+    Axios.post('/submit-from', data, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
   return (
     <Container className="mt-4">
-      <h1 style={{textAlign: 'center'}} className="mt-5 mb-5">Select your Business Data List</h1>
+      <h1 style={{ textAlign: 'center' }} className="mt-5 mb-5">
+        Select your Business Data List
+      </h1>
       <Row>
         <Col sm={12} md={6}>
           <Card>

@@ -3,7 +3,7 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import { generateToken } from "./auth/jwt.js";
+import { generateToken, isAuthenticated } from "./auth/jwt.js";
 
 const app = express();
 
@@ -29,6 +29,7 @@ const newSchema2 = new mongoose.Schema({
   lastName: String,
   username: String,
   password: String,
+  forms: [],
 });
 
 const User = mongoose.model("User", newSchema2);
@@ -68,6 +69,25 @@ app.post("/signup", (req, res) => {
       res.send("Successfully signup");
     } else {
       res.send("error signup");
+    }
+  });
+});
+
+app.post("/submit-from", isAuthenticated, (req, res) => {
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
+      res.send(err);
+    } else if (user) {
+      user.forms.push(req.body);
+      user.save((err) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send("Successfully submit form");
+        }
+      });
+    } else {
+      res.send("user not found");
     }
   });
 });
