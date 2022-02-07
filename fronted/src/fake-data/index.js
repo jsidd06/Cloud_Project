@@ -6,6 +6,12 @@ export const formFields = [
     label: 'User Full Name',
   },
   {
+    id: 16,
+    type: 'number',
+    name: 'gst',
+    label: 'GST Number',
+  },
+  {
     id: 2,
     type: 'email',
     name: 'email',
