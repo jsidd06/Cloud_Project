@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Card,
   CardHeader,
@@ -12,8 +12,30 @@ import {
   Label,
 } from 'reactstrap'
 import Layout from '../../Components/data/Layout'
+import Axios from '../../config/Axios'
 
 function Signup() {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [signupData, setDataSignup] = useState('')
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    Axios.post('/signup', {
+      username,
+      password,
+      firstName,
+      lastName,
+    }).then((res) => {
+      console.log(res)
+      setDataSignup(res.data)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
   return (
     <Layout>
       <Card>
@@ -24,23 +46,23 @@ function Signup() {
           <CardBody>
             <FormGroup>
               <Label>First Name</Label>
-              <Input type="text" />
+              <Input type="text" onChange={(e) => setFirstName(e.target.value)} />
             </FormGroup>
             <FormGroup>
               <Label>Last Name</Label>
-              <Input type="text" />
+              <Input type="text" onChange={(e) => setLastName(e.target.value)} />
             </FormGroup>
             <FormGroup>
               <Label>username</Label>
-              <Input type="username" />
+              <Input type="username" onChange={(e) => setUsername(e.target.value)}/>
             </FormGroup>
             <FormGroup>
               <Label>Password</Label>
-              <Input type="password" />
+              <Input type="password" onChange={(e) => setPassword(e.target.value)}/>
             </FormGroup>
           </CardBody>
           <CardFooter>
-            <Button>Signup</Button>
+            <Button type="submit" onClick={handleSubmit}>Signup</Button>
           </CardFooter>
         </Form>
       </Card>
