@@ -23,8 +23,6 @@ function Header() {
   return (
     <Fragment>
       <Navbar color="light" expand="md" light>
-        <NavbarBrand href="/">Firebase</NavbarBrand>
-        <NavbarToggler onClick={function noRefCheck() {}} />
         <Collapse navbar>
           <Nav className="me-auto" navbar>
             <NavItem>
@@ -49,7 +47,7 @@ function Header() {
                 </span>
               </>
             ) : (
-              <Link to="/login">Login</Link>
+              <Link className="btn btn-default" to="/login">Login</Link>
             )}
           </NavbarText>
         </Collapse>
