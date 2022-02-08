@@ -9,9 +9,17 @@ import {
   NavItem,
   NavLink,
   NavbarText,
+  Tooltip,
 } from 'reactstrap'
 
+import { LogOut } from 'react-feather'
+
 function Header() {
+  const logoutHandler = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('name')
+    window.location.href = '/login'
+  }
   return (
     <Fragment>
       <Navbar color="light" expand="md" light>
@@ -27,7 +35,22 @@ function Header() {
             </NavItem>
           </Nav>
           <NavbarText>
-            {localStorage.getItem('name') || <Link to="/login">Login</Link>}
+            {localStorage.getItem('name') ? (
+              <>
+                <span>Welcome {localStorage.getItem('name')}</span>
+                <span
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="bottom"
+                  title="Logout"
+                  style={{ marginLeft: 20, padding: 10, cursor: 'pointer' }}
+                  onClick={logoutHandler}
+                >
+                  <LogOut size={30} />
+                </span>
+              </>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
           </NavbarText>
         </Collapse>
       </Navbar>
