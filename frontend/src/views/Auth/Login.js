@@ -35,6 +35,7 @@ function Login() {
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('name', res.data.firstName)
         toast('Login Successfully!')
+        window.location.href = '/form'
       })
       .catch((err) => {
         console.log(err)
@@ -67,9 +68,7 @@ function Login() {
             </FormGroup>
           </CardBody>
           <CardFooter>
-            {loginData ? (
-              <Navigate to="/form" />
-            ) : (
+            {loginData ? null : (
               <Button className="btn btn-primary m-2 " onClick={handleSubmit}>
                 Login
               </Button>

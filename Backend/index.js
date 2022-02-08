@@ -50,10 +50,10 @@ app.post("/login", (req, res) => {
           token,
         });
       } else {
-        res.send("wrong password");
+        res.status(401).json("wrong password");
       }
     } else {
-      res.send("user not found");
+      res.status(404).json("user not found");
     }
   });
 });
