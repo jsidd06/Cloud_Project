@@ -41,18 +41,20 @@ app.post("/login", (req, res) => {
     if (err) {
       res.send(err);
     } else if (data) {
-      if (data.password === password) {
-        const token = generateToken(data);
-        res.status(200).json({
-          id: data._id,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          username: data.username,
-          token,
-        });
-      } else {
-        res.status(401).json("wrong password");
-      }
+      bcrypt.compare(req.body.password, data.password, function (err, result) {
+        if (result) {
+          const token = generateToken(data);
+          res.status(200).json({
+            id: data._id,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            username: data.username,
+            token,
+          });
+        } else {
+          res.status(401).json("wrong password");
+        }
+      });
     } else {
       res.status(404).json("user not found");
     }
