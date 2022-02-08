@@ -1,57 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { toast, ToastContainer} from 'react-toastify'
-import { Table,Button } from 'reactstrap'
+import { toast, ToastContainer } from 'react-toastify'
+import { Table, Button } from 'reactstrap'
 import Axios from '../../config/Axios'
+import { formFields } from '../../fake-data'
 
 function FormTable() {
-  const [userData, setUserData] = useState([])
+  const [userData, setUserData] = useState(null)
   const submitHandler = () => {
-    if(!localStorage.getItem('token')){
-      <Navigate to="/login" />
-    }
-      Axios.get('/get_form_data')
-        .then((res) => {
-          console.log(res.data)
-          setUserData(res.data)
-          toast('Now you set the Data')
-        })
-        .catch((err) => {
-          console.log(err)
-          toast('login is required')
-        })
+    Axios.get('/get_form_data')
+      .then((res) => {
+        console.log(res.data)
+        setUserData(res.data)
+        toast('Now you see the Data')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
   return (
     <>
-      {!userData ? <Button onClick={submitHandler}>Check Your List Now </Button>
-      : <Link to="/login">Login</Link> ? (
-        <Table>
+      <Button onClick={submitHandler}>Check Your List Now </Button>
+      {userData && (
+        <Table className="table-hover-animation text-center " responsive>
           <thead>
-            <tr></tr>
+            <tr>
+              {formFields.map((d) => {
+                return <th style={{ minWidth: 200 }}>{d.label}</th>
+              })}
+            </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            {userData.map((d) => {
+              return (
+                <tr>
+                  {formFields.map((f) => {
+                    return <td>{d[f.name]}</td>
+                  })}
+                </tr>
+              )
+            })}
           </tbody>
         </Table>
-      ) : (
-        <Navigate to="/login" />
       )}
       <ToastContainer />
     </>
