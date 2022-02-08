@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Navbar,
   NavbarBrand,
@@ -22,12 +23,12 @@ function Header() {
               <NavLink href="/">Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
-                Form
-              </NavLink>
+              <NavLink href="/form">Form</NavLink>
             </NavItem>
           </Nav>
-          <NavbarText>User Name</NavbarText>
+          <NavbarText>
+            {localStorage.getItem('name') || <Link to="/login">Login</Link>}
+          </NavbarText>
         </Collapse>
       </Navbar>
     </Fragment>

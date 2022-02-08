@@ -20,6 +20,7 @@ import Axios from '../../config/Axios'
 import { Navigate } from 'react-router-dom'
 import FormTable from './FormTable'
 import { toast, ToastContainer } from 'react-toastify'
+import Layout from '../../Components/data/Layout'
 function FormPage() {
   const [formData, setFormData] = useState([])
   const {
@@ -52,7 +53,7 @@ function FormPage() {
       })
   }
   return (
-    <Container className="mt-4">
+    <Layout className="mt-4">
       <h1 style={{ textAlign: 'center' }} className="mt-5 mb-5">
         Select your Business Data List
       </h1>
@@ -127,7 +128,7 @@ function FormPage() {
       </Row>
 
       <FormTable />
-    </Container>
+    </Layout>
   )
 }
 

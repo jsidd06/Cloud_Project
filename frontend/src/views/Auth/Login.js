@@ -19,10 +19,10 @@ function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loginData, setDataLogin] = useState('')
-  
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    if(username === '' || password === ''){
+    if (username === '' || password === '') {
       toast('Please correctly fill your username and password!')
     }
     Axios.post('/login', {
@@ -33,6 +33,7 @@ function Login() {
         console.log(res)
         setDataLogin(res.data)
         localStorage.setItem('token', res.data.token)
+        localStorage.setItem('name', res.data.firstName)
         toast('Login Successfully!')
       })
       .catch((err) => {
@@ -66,9 +67,17 @@ function Login() {
             </FormGroup>
           </CardBody>
           <CardFooter>
-           {loginData ? <Navigate to="/form" /> : <Button className="btn btn-primary m-2 "onClick={handleSubmit}>Login</Button>}
-           <Link className="btn btn-primary" to="/signup">Signup</Link>
-           <ToastContainer />
+            {loginData ? (
+              <Navigate to="/form" />
+            ) : (
+              <Button className="btn btn-primary m-2 " onClick={handleSubmit}>
+                Login
+              </Button>
+            )}
+            <Link className="btn btn-primary" to="/signup">
+              Signup
+            </Link>
+            <ToastContainer />
           </CardFooter>
         </Form>
       </Card>
