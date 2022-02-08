@@ -33,7 +33,7 @@ const newSchema2 = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", newSchema2);
-
+// login check the data in mongoose
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   User.findOne({ username }, (err, data) => {
@@ -57,7 +57,7 @@ app.post("/login", (req, res) => {
     }
   });
 });
-
+// save the user data in mongoose to sign in
 app.post("/signup", (req, res) => {
   new User({
     firstName: req.body.firstName,
@@ -73,6 +73,7 @@ app.post("/signup", (req, res) => {
   });
 });
 
+// get all forms  data submit with authentication 
 app.post("/submit-from", isAuthenticated, (req, res) => {
   User.findOne({ username: req.user.username }, (err, user) => {
     if (err) {
@@ -92,6 +93,7 @@ app.post("/submit-from", isAuthenticated, (req, res) => {
   });
 });
 
+// get all forms data with api send to fronted using axios and then render to frontend
 app.get("/get_form_data", isAuthenticated, (req, res) => {
   User.findOne({ username: req.user.username }, (err, user) => {
     if (err) {

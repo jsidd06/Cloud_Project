@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table } from 'reactstrap'
 import Axios from '../../config/Axios'
 
 function FormTable() {
+  const [userData, setUserData] = useState([])
   useEffect(() => {
     Axios.get('/get_form_data')
       .then((res) => {

@@ -13,11 +13,12 @@ import {
 } from 'reactstrap'
 import Axios from '../../config/Axios'
 import Layout from '../../Components/data/Layout'
+import { Navigate } from 'react-router-dom'
 function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loginData, setDataLogin] = useState('')
-
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     Axios.post('/login', {
@@ -57,9 +58,7 @@ function Login() {
             </FormGroup>
           </CardBody>
           <CardFooter>
-            <Button type="submit" onClick={handleSubmit}>
-              Login
-            </Button>
+           {loginData ? <Navigate to="/form" /> : <Button onClick={handleSubmit}>Login</Button>}
           </CardFooter>
         </Form>
       </Card>

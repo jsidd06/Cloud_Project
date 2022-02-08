@@ -17,8 +17,7 @@ import {
 import { formFields } from '../../fake-data'
 import { Controller, useForm } from 'react-hook-form'
 import Axios from '../../config/Axios'
-import { Link, Navigate } from 'react-router-dom'
-import Login from '../Auth/Login'
+import {  Navigate } from 'react-router-dom'
 import FormTable from './FormTable'
 function FormPage() {
   const [formData, setFormData] = useState([])
@@ -28,10 +27,11 @@ function FormPage() {
     setValue,
     formState: { errors },
   } = useForm()
+  // if user is not login the first login and I'm checking the local storage generated token with the help of jwt
   if (!localStorage.getItem('token')) {
     return <Navigate to="/login" />
   }
-
+// then user submit the data we check the data with the help of axios
   const onSubmit = (data) => {
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
@@ -41,7 +41,7 @@ function FormPage() {
         }
       }
     }
-
+// api call to backend with fronted to use of axios
     Axios.post('/submit-from', data)
       .then((res) => {
         console.log(res)
@@ -66,6 +66,7 @@ function FormPage() {
               <CardBody
                 style={{ minHeight: 450, maxHeight: 450, overflowY: 'auto' }}
               >
+                {/* we set the data in map and use controller to use the input */}
                 {formData.map((fd, i) => (
                   <FormGroup key={i}>
                     <Label>{fd.label}</Label>
@@ -90,6 +91,7 @@ function FormPage() {
           </Card>
         </Col>
         <Col sm={12} md={6} style={{ maxHeight: 560, overflowY: 'auto' }}>
+          {/* show to table data using fake data info */}
           {formFields.map((field, index) => (
             <Card key={index} className="m-2 p-4">
               <CardBody>
