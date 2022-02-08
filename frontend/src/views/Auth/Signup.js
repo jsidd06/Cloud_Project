@@ -9,12 +9,12 @@ import {
   Input,
   Form,
   FormGroup,
-  Button,
   Label,
+  Button,
 } from 'reactstrap'
 import Layout from '../../Components/data/Layout'
 import Axios from '../../config/Axios'
-
+  import { ToastContainer, toast } from 'react-toastify'
 function Signup() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -26,7 +26,7 @@ function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if(username === '' || password === '' || firstName === '' || lastName === ''){
-      alert('Please fill all the fields')
+      toast('Please fill the all fields correctly!')
     }else{
       Axios.post('/signup', {
         username,
@@ -54,23 +54,44 @@ function Signup() {
           <CardBody>
             <FormGroup>
               <Label>First Name</Label>
-              <Input type="text" required onChange={(e) => setFirstName(e.target.value)} />
+              <Input
+                type="text"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
             </FormGroup>
             <FormGroup>
               <Label>Last Name</Label>
-              <Input type="text" onChange={(e) => setLastName(e.target.value)} />
+              <Input
+                type="text"
+                value={lastName}
+                required
+                onChange={(e) => setLastName(e.target.value)}
+              />
             </FormGroup>
             <FormGroup>
               <Label>username</Label>
-              <Input type="username" onChange={(e) => setUsername(e.target.value)}/>
+              <Input
+                type="username"
+                required
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+              />
             </FormGroup>
             <FormGroup>
               <Label>Password</Label>
-              <Input type="password" onChange={(e) => setPassword(e.target.value)}/>
+              <Input
+                type="password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
             </FormGroup>
           </CardBody>
           <CardFooter>
-            <Link to="/login"  className="btn btn-primary mr-4" onClick={handleSubmit}>Signup</Link>
+           {signupData ? <Link to="/login" className="btn btn-danger">Login</Link> : <Button onClick={handleSubmit}>Signup</Button>}
+            <ToastContainer />
           </CardFooter>
         </Form>
       </Card>
