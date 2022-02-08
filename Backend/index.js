@@ -92,6 +92,18 @@ app.post("/submit-from", isAuthenticated, (req, res) => {
   });
 });
 
+app.get("/get_form_data", isAuthenticated, (req, res) => {
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
+      res.send(err);
+    } else if (user) {
+      res.status(200).json(user.forms);
+    } else {
+      res.send("user not found");
+    }
+  });
+});
+
 app.listen(5000, () => {
   console.log("future f*ck is running on Port 5000");
 });

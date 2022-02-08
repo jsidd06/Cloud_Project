@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Container,
   Row,
@@ -17,10 +17,21 @@ import {
 import { formFields } from '../../fake-data'
 import { Controller, useForm } from 'react-hook-form'
 import Axios from '../../config/Axios'
-
+import { Link, Navigate } from 'react-router-dom'
+import Login from '../Auth/Login'
+import FormTable from './FormTable'
 function FormPage() {
-  const [formData, setFormData] = React.useState([])
-  const { control, handleSubmit, setValue } = useForm()
+  const [formData, setFormData] = useState([])
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm()
+  if (!localStorage.getItem('token')) {
+    return <Navigate to="/login" />
+  }
+
   const onSubmit = (data) => {
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
@@ -30,14 +41,11 @@ function FormPage() {
         }
       }
     }
-    console.log(data)
-    Axios.post('/submit-from', data, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token'),
-      },
-    })
+
+    Axios.post('/submit-from', data)
       .then((res) => {
         console.log(res)
+        setFormData(res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -63,11 +71,15 @@ function FormPage() {
                     <Label>{fd.label}</Label>
                     <Controller
                       name={fd.name}
+                      rules={{ required: true }}
                       render={({ field }) => (
                         <Input {...field} type={fd.type} />
                       )}
                       control={control}
                     />
+                    {errors[fd.name] && (
+                      <i className="text-danger">This field is required</i>
+                    )}
                   </FormGroup>
                 ))}
               </CardBody>
@@ -110,6 +122,8 @@ function FormPage() {
           ))}
         </Col>
       </Row>
+
+      <FormTable />
     </Container>
   )
 }
