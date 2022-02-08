@@ -13,7 +13,7 @@ import {
 } from 'reactstrap'
 import Axios from '../../config/Axios'
 import Layout from '../../Components/data/Layout'
-import { Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -59,6 +59,7 @@ function Login() {
           </CardBody>
           <CardFooter>
            {loginData ? <Navigate to="/form" /> : <Button onClick={handleSubmit}>Login</Button>}
+           <Link className="btn btn-primary" to="/signup">Signup</Link>
           </CardFooter>
         </Form>
       </Card>

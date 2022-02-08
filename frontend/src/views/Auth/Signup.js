@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Card,
   CardHeader,
@@ -24,17 +25,24 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    Axios.post('/signup', {
-      username,
-      password,
-      firstName,
-      lastName,
-    }).then((res) => {
-      console.log(res)
-      setDataSignup(res.data)
-    }).catch((err) => {
-      console.log(err)
-    })
+    if(username === '' || password === '' || firstName === '' || lastName === ''){
+      alert('Please fill all the fields')
+    }else{
+      Axios.post('/signup', {
+        username,
+        password,
+        firstName,
+        lastName,
+      })
+        .then((res) => {
+          console.log(res)
+          setDataSignup(res.data)
+          localStorage.setItem('token', res.data.token)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }
   return (
     <Layout>
@@ -46,7 +54,7 @@ function Signup() {
           <CardBody>
             <FormGroup>
               <Label>First Name</Label>
-              <Input type="text" onChange={(e) => setFirstName(e.target.value)} />
+              <Input type="text" required onChange={(e) => setFirstName(e.target.value)} />
             </FormGroup>
             <FormGroup>
               <Label>Last Name</Label>
@@ -62,7 +70,7 @@ function Signup() {
             </FormGroup>
           </CardBody>
           <CardFooter>
-            <Button type="submit" onClick={handleSubmit}>Signup</Button>
+            <Link to="/login"  className="btn btn-primary mr-4" onClick={handleSubmit}>Signup</Link>
           </CardFooter>
         </Form>
       </Card>
