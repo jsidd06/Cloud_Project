@@ -19,6 +19,7 @@ import { Controller, useForm } from 'react-hook-form'
 import Axios from '../../config/Axios'
 import {  Navigate } from 'react-router-dom'
 import FormTable from './FormTable'
+import { toast, ToastContainer } from 'react-toastify'
 function FormPage() {
   const [formData, setFormData] = useState([])
   const {
@@ -46,9 +47,11 @@ function FormPage() {
       .then((res) => {
         console.log(res)
         setFormData(res.data)
+        toast('Now you set the Data')
       })
       .catch((err) => {
         console.log(err)
+        toast('login is required')
       })
   }
   return (
@@ -86,6 +89,7 @@ function FormPage() {
               </CardBody>
               <CardFooter>
                 <Button>Submit</Button>
+                <ToastContainer />
               </CardFooter>
             </Form>
           </Card>
