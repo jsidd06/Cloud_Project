@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 import cors from "cors";
 import { generateToken, isAuthenticated } from "./auth/jwt.js";
 
@@ -63,7 +64,7 @@ app.post("/signup", (req, res) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     username: req.body.username,
-    password: req.body.password,
+    password: bcrypt.hashSync(req.body.password, 10),
   }).save(function (err) {
     if (!err) {
       res.send("Successfully signup");
@@ -73,7 +74,7 @@ app.post("/signup", (req, res) => {
   });
 });
 
-// get all forms  data submit with authentication 
+// get all forms  data submit with authentication
 app.post("/submit-from", isAuthenticated, (req, res) => {
   User.findOne({ username: req.user.username }, (err, user) => {
     if (err) {
