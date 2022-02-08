@@ -35,7 +35,7 @@ function FormTable() {
               return (
                 <tr>
                   {formFields.map((f) => {
-                    return <td>{d[f.name]}</td>
+                    return <td>{d[f.name] || 'Empty'}</td>
                   })}
                 </tr>
               )
