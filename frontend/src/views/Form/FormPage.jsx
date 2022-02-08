@@ -35,6 +35,10 @@ function FormPage() {
   }
   // then user submit the data we check the data with the help of axios
   const onSubmit = (data) => {
+    if (!Object.keys(data).length) {
+      toast.error('You must fill the form')
+      return
+    }
     for (const key in data) {
       if (Object.hasOwnProperty.call(data, key)) {
         const element = data[key]
@@ -46,7 +50,7 @@ function FormPage() {
     // api call to backend with fronted to use of axios
     Axios.post('/submit-from', data)
       .then((res) => {
-        toast('Now you set the Data')
+        toast('Now you can see the Form List')
       })
       .catch((err) => {
         console.log(err)
