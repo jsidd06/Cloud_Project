@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { CardImg } from 'reactstrap'
 import Layout from '../../Components/data/Layout'
 function Home() {
   return (

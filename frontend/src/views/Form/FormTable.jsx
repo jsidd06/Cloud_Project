@@ -17,7 +17,7 @@ function FormTable() {
     Axios.get('/get_form_data')
       .then((res) => {
         console.log(res.data)
-        setUserData(res.data)
+        setUserData(res.data.reverse())
         toast('Now you see the Data')
         
       })
