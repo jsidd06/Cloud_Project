@@ -18,7 +18,7 @@ function SearchBar({ userData, setUserData }) {
   }
   return (
     <Container>
-        <Input type="number" onChange={searchButton} />
+        <Input type="number" style={{maxWidth:500}} placeholder="type the gst number" onChange={searchButton} />
     </Container>
   )
 }

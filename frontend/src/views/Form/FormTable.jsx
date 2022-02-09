@@ -20,11 +20,13 @@ function FormTable() {
   }
   return (
     <>
-      <Button onClick={submitHandler}>Check Your List Now </Button>
-      <SearchBar userData={userData} setUserData={setUserData} />
+      <Button className="mb-2" onClick={submitHandler}>
+        Check Your List Now{' '}
+      </Button>
       {userData && (
         <Table className="table-hover-animation text-center " responsive>
           <thead>
+            <SearchBar userData={userData} setUserData={setUserData} />
             <tr>
               {formFields.map((d) => {
                 return <th style={{ minWidth: 200 }}>{d.label}</th>
