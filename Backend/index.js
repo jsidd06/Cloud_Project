@@ -109,6 +109,23 @@ app.get("/get_form_data", isAuthenticated, (req, res) => {
   });
 });
 
+// get add data in search api
+app.post("/search", isAuthenticated, (req, res) => {
+  const { search } = req.body;
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
+      res.send(err);
+    } else if (user) {
+      const data = user.forms.filter((form) => {
+        return form.gst.toLowerCase().includes(search.toLowerCase());
+      });
+      res.status(200).json(data);
+    } else {
+      res.send("user not found");
+    }
+  });
+});
+
 app.listen(5000, () => {
   console.log("future f*ck is running on Port 5000");
 });

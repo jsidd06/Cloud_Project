@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import React, {  useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { Table, Button } from 'reactstrap'
 import Axios from '../../config/Axios'
 import { formFields } from '../../fake-data'
+import SearchBar from './SearchBar'
 
 function FormTable() {
   const [userData, setUserData] = useState(null)
@@ -21,6 +21,7 @@ function FormTable() {
   return (
     <>
       <Button onClick={submitHandler}>Check Your List Now </Button>
+      <SearchBar userData={userData} setUserData={setUserData} />
       {userData && (
         <Table className="table-hover-animation text-center " responsive>
           <thead>
