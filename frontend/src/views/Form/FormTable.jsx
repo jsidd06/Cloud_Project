@@ -1,12 +1,17 @@
-import React, {  useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { Table, Button } from 'reactstrap'
 import Axios from '../../config/Axios'
 import { formFields } from '../../fake-data'
 import SearchBar from './SearchBar'
+import ReactPaginate from 'react-paginate'
 
 function FormTable() {
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState([])
+  const [noOfPages, setNoOfPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [currentItem, setCurrentItem] = useState([])
+  const [itemsPerPage, setItemsPerPage] = useState(10)
   const submitHandler = () => {
     Axios.get('/get_form_data')
       .then((res) => {
@@ -18,6 +23,15 @@ function FormTable() {
         console.log(err)
       })
   }
+   useEffect(() => {
+     const endOffset = currentPage + itemsPerPage
+     setCurrentItem(userData.slice(currentPage, endOffset))
+     setNoOfPages(Math.ceil(userData.length / itemsPerPage))
+   }, [currentPage, itemsPerPage, userData])
+   const handlePageClick = (event) => {
+     const newOffset = (event.selected * itemsPerPage) % userData.length
+     setCurrentPage(newOffset)
+   }
   return (
     <>
       <Button className="mb-2" onClick={submitHandler}>
@@ -34,7 +48,7 @@ function FormTable() {
             </tr>
           </thead>
           <tbody>
-            {userData.map((d) => {
+            {currentItem.map((d) => {
               return (
                 <tr>
                   {formFields.map((f) => {
@@ -43,6 +57,18 @@ function FormTable() {
                 </tr>
               )
             })}
+            <ReactPaginate
+              previousLabel={'Back'}
+              nextLabel={'Next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={userData.length / itemsPerPage}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={'pagination'}
+              activeClassName={'active'}
+            />
           </tbody>
         </Table>
       )}
