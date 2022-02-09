@@ -41,12 +41,12 @@ export const formFields = [
     name: 'extra_details',
     label: 'Extra Details',
   },
-  {
-    id: 5,
-    type: 'file',
-    name: 'profile',
-    label: 'Upload Image',
-  },
+  // {
+  //   id: 5,
+  //   type: 'file',
+  //   name: 'profile',
+  //   label: 'Upload Image',
+  // },
   {
     id: 6,
     type: 'number',
