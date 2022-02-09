@@ -51,6 +51,7 @@ function FormPage() {
     Axios.post('/submit-from', data)
       .then((res) => {
         toast('Now you can see the Form List')
+        setFormData([])
       })
       .catch((err) => {
         console.log(err)
