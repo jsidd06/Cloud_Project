@@ -18,7 +18,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((req) => {
-    console.log("f*ck to MongoDB");
+    console.log("connected to MongoDB");
   })
   .catch((err) => {
     console.log("Error: ", err);
@@ -127,5 +127,5 @@ app.post("/search", isAuthenticated, (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log("future f*ck is running on Port 5000");
+  console.log("connect with Port 5000");
 });

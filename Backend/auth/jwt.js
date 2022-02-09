@@ -13,7 +13,7 @@ export const isAuthenticated = (req, res, next) => {
     JWT.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         return res.status(401).json({
-          message: "Bhag bhenchod token expire hai tera",
+          message: "ops your token expire has been expired",
         });
       }
       req.user = decoded.user;
@@ -21,7 +21,7 @@ export const isAuthenticated = (req, res, next) => {
     });
   } else {
     return res.status(401).json({
-      message: "Authentication token provide kar na laure",
+      message: "Authentication token is not available",
     });
   }
 };
