@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { CardImg } from 'reactstrap'
 import Layout from '../../Components/data/Layout'
+import Video from "../../video/list.mp4"
 function Home() {
   return (
     <Layout>
@@ -10,6 +10,7 @@ function Home() {
         <Link className="btn btn-warning mt-5" to="/form">
           Click here to Start
         </Link>
+        <video muted loop autoPlay preload="auto" style={{maxWidth: '100%',marginTop: '10px'}}  src={Video}></video>
       </div>
     </Layout>
   )
