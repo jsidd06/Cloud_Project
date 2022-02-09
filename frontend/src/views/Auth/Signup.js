@@ -59,6 +59,8 @@ function Signup() {
                 required
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
+                placeholder="Enter your first name"
+                invalid={firstName === '' ? true : false}
               />
             </FormGroup>
             <FormGroup>
@@ -68,6 +70,8 @@ function Signup() {
                 value={lastName}
                 required
                 onChange={(e) => setLastName(e.target.value)}
+                placeholder="Enter your last name"
+                invalid={lastName === '' ? true : false}
               />
             </FormGroup>
             <FormGroup>
@@ -77,6 +81,8 @@ function Signup() {
                 required
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
+                placeholder="Enter your username"
+                invalid={username === '' ? true : false}
               />
             </FormGroup>
             <FormGroup>
@@ -86,6 +92,8 @@ function Signup() {
                 required
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                placeholder="Enter your password"
+                invalid={password === '' ? true : false}
               />
             </FormGroup>
           </CardBody>

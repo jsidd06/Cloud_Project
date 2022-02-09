@@ -56,6 +56,9 @@ function Login() {
                 type="username"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
+                placeholder="Enter your username"
+                required
+                invalid={username === '' ? true : false}
               />
             </FormGroup>
             <FormGroup>
@@ -64,6 +67,9 @@ function Login() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+                invalid={password === '' ? true : false}
               />
             </FormGroup>
           </CardBody>
