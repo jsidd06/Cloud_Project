@@ -36,7 +36,7 @@ function FormTable() {
   }
   return (
     <>
-      <Button className="mb-2" onClick={submitHandler}>
+      <Button className="mb-4 mt-4" onClick={submitHandler}>
         Check Your List Now{' '}
       </Button>
       {userData && (
