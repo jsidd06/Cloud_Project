@@ -78,7 +78,11 @@ function FormPage() {
                     <Label>{fd.label}</Label>
                     <Controller
                       name={fd.name}
-                      rules={{ required: true }}
+                      rules={{
+                        required: true,
+                        minLength: fd.minLength,
+                        maxLength: fd.maxLength,
+                      }}
                       render={({ field }) => (
                         <Input {...field} type={fd.type} />
                       )}
