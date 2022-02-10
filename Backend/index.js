@@ -3,13 +3,20 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import pdf from "pdf-creator-node";
+import fs from "fs";
 import cors from "cors";
 import { generateToken, isAuthenticated } from "./auth/jwt.js";
+import { nanoid } from "nanoid";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/reports/pdf", express.static("reports"));
+
+// pdf
+var html = fs.readFileSync("template.html", "utf8");
 
 // Connect to MongoDB
 mongoose
@@ -120,6 +127,61 @@ app.post("/search", isAuthenticated, (req, res) => {
         return form.gst.toLowerCase().includes(search.toLowerCase());
       });
       res.status(200).json(data);
+    } else {
+      res.send("user not found");
+    }
+  });
+});
+
+app.get("/report/generate-pdf", isAuthenticated, (req, res) => {
+  const fileName = nanoid();
+  var options = {
+    format: "A3",
+    orientation: "portrait",
+    border: "10mm",
+    header: {
+      height: "45mm",
+      contents: `<div style="text-align: center;">Report : ${req.user.username}</div>`,
+    },
+    footer: {
+      height: "28mm",
+      contents: {
+        first: `${req.user.firstName.toUpperCase()} ${req.user.lastName.toUpperCase()}`,
+        2: "Second page", // Any page number is working. 1-based index
+        default:
+          '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+        last: "Last Page",
+      },
+    },
+  };
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
+      res.send(err);
+    } else if (user) {
+      const forms = user.forms;
+      var document = {
+        html: html,
+        data: {
+          forms: forms,
+        },
+        path: `./reports/${req.user.username}/${fileName}.pdf`,
+        type: "",
+      };
+      pdf
+        .create(document, options)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      res.status(200).json({
+        url:
+          req.protocol +
+          "://" +
+          req.get("host") +
+          `/reports/pdf/${req.user.username}/${fileName}.pdf`,
+      });
     } else {
       res.send("user not found");
     }
