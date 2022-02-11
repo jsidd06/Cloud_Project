@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import {
-  Container,
   Row,
   Col,
   Card,
@@ -84,7 +83,7 @@ function FormPage() {
                         maxLength: fd.maxLength,
                       }}
                       render={({ field }) => (
-                        <Input {...field} type={fd.type} />
+                        <Input {...field} type={fd.type} placeholder={fd.placeholder} />
                       )}
                       control={control}
                     />

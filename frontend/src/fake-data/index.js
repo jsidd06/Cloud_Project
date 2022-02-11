@@ -34,7 +34,7 @@ export const formFields = [
     required: true,
     minLength: 10,
     maxLength: 10,
-    placeholder: 'Enter your phone number',
+    placeholder: 'Enter your 10digit phone number',
   },
   {
     id: 15,
