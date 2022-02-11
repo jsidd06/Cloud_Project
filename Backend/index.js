@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import express from "express";
+import express, { json } from "express";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import pdf from "pdf-creator-node";
@@ -8,6 +8,8 @@ import fs from "fs";
 import cors from "cors";
 import { generateToken, isAuthenticated } from "./auth/jwt.js";
 import { nanoid } from "nanoid";
+import { formFields } from "./fake-data/data.js";
+import { resolveSoa } from "dns";
 
 const app = express();
 
@@ -89,12 +91,12 @@ app.post("/submit-from", isAuthenticated, (req, res) => {
     if (err) {
       res.send(err);
     } else if (user) {
-      user.forms.push(req.body);
-      user.save((err) => {
+      user.forms.push({ ...req.body, _id: nanoid() });
+      user.save((err, doc) => {
         if (err) {
           res.send(err);
         } else {
-          res.send("Successfully submit form");
+          res.status(201).json(doc);
         }
       });
     } else {
@@ -132,8 +134,9 @@ app.post("/search", isAuthenticated, (req, res) => {
     }
   });
 });
-
-app.get("/report/generate-pdf", isAuthenticated, (req, res) => {
+// api pdf report
+app.post("/report/generate-pdf", isAuthenticated, (req, res) => {
+  const { formid } = req.body;
   const fileName = nanoid();
   var options = {
     format: "A3",
@@ -159,29 +162,39 @@ app.get("/report/generate-pdf", isAuthenticated, (req, res) => {
       res.send(err);
     } else if (user) {
       const forms = user.forms;
-      var document = {
-        html: html,
-        data: {
-          forms: forms,
-        },
-        path: `./reports/${req.user.username}/${fileName}.pdf`,
-        type: "",
-      };
-      pdf
-        .create(document, options)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          console.error(error);
+      const form = forms.find((form) => form._id == formid);
+
+      if (form) {
+        let finalForm = {};
+        formFields.map((f) => {
+          finalForm[f.name] = form[f.name] || "N/A";
         });
-      res.status(200).json({
-        url:
-          req.protocol +
-          "://" +
-          req.get("host") +
-          `/reports/pdf/${req.user.username}/${fileName}.pdf`,
-      });
+        var document = {
+          html: html,
+          data: {
+            forms: [finalForm],
+          },
+          path: `./reports/${req.user.username}/${fileName}.pdf`,
+          type: "",
+        };
+        pdf
+          .create(document, options)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        res.status(200).json({
+          url:
+            req.protocol +
+            "://" +
+            req.get("host") +
+            `/reports/pdf/${req.user.username}/${fileName}.pdf`,
+        });
+      } else {
+        res.status(404).json("form not found");
+      }
     } else {
       res.send("user not found");
     }
