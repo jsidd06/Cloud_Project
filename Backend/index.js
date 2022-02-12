@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import express, { json } from "express";
+import express from "express";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import pdf from "pdf-creator-node";
@@ -8,8 +8,7 @@ import fs from "fs";
 import cors from "cors";
 import { generateToken, isAuthenticated } from "./auth/jwt.js";
 import { nanoid } from "nanoid";
-import { formFields } from "./fake-data/data.js";
-import { resolveSoa } from "dns";
+import { generateFormId } from "./helpers/reports.js";
 
 const app = express();
 
@@ -87,53 +86,29 @@ app.post("/signup", (req, res) => {
 
 // get all forms  data submit with authentication
 app.post("/submit-from", isAuthenticated, (req, res) => {
-  let formid = null;
-  fs.readFile("formid.txt", (err, data) => {
-    const date = new Date();
-    let result = date.toLocaleDateString("en-IN", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-    const [day, month, year] = result.split("/");
-    const YearMonth = `${year}${month}${day}`;
-    if (!data) {
-      fs.writeFile("formid.txt", "1", (err) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        formid = `${YearMonth}1`;
-      });
-    } else {
-      const currentIdCounter = parseInt(data);
-      const nextIdCounter = currentIdCounter + 1;
-      const finalNextFormId = `${YearMonth}${nextIdCounter}`;
-      fs.writeFile("formid.txt", String(nextIdCounter), (err) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        formid = finalNextFormId;
-      });
-    }
-  });
-  User.findOne({ username: req.user.username }, (err, user) => {
-    if (err) {
-      res.send(err);
-    } else if (user) {
-      user.forms.push({ ...req.body, _id: formid });
-      user.save((err, doc) => {
+  generateFormId()
+    .then((formid) => {
+      console.log("form id", formid);
+      User.findOne({ username: req.user.username }, (err, user) => {
         if (err) {
           res.send(err);
+        } else if (user) {
+          user.forms.push({ ...req.body, _id: formid });
+          user.save((err, doc) => {
+            if (err) {
+              res.send(err);
+            } else {
+              res.status(201).json(doc);
+            }
+          });
         } else {
-          res.status(201).json(doc);
+          res.send("user not found");
         }
       });
-    } else {
-      res.send("user not found");
-    }
-  });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 });
 
 // get all forms data with api send to fronted using axios and then render to frontend
@@ -235,6 +210,6 @@ app.post("/report/generate-pdf", isAuthenticated, (req, res) => {
   });
 });
 
-app.listen(5000, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log("connect with Port 5000");
 });
