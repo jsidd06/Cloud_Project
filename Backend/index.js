@@ -109,7 +109,7 @@ app.post("/submit-from", isAuthenticated, (req, res) => {
       const currentIdCounter = parseInt(data);
       const nextIdCounter = currentIdCounter + 1;
       const finalNextFormId = `${YearMonth}${nextIdCounter}`;
-      fs.writeFile("formid.txt", String(finalNextFormId), (err) => {
+      fs.writeFile("formid.txt", String(nextIdCounter), (err) => {
         if (err) {
           console.log(err);
           return;
@@ -201,8 +201,8 @@ app.post("/report/generate-pdf", isAuthenticated, (req, res) => {
     } else if (user) {
       const forms = user.forms;
       const form = forms.find((form) => form._id == formid);
-      delete form["_id"];
       if (form) {
+        delete form["_id"];
         var document = {
           html: html,
           data: {

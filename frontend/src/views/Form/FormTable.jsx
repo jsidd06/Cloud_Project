@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
-import { Table, Button } from 'reactstrap'
+import { Table, Button, Label } from 'reactstrap'
 import Axios from '../../config/Axios'
 import { formFields } from '../../fake-data'
 import SearchBar from './SearchBar'
 import ReactPaginate from 'react-paginate'
 import { Slash } from 'react-feather'
+import PdfForm from './PdfForm'
 
 function FormTable() {
   const [userData, setUserData] = useState([])
@@ -19,7 +20,6 @@ function FormTable() {
         console.log(res.data)
         setUserData(res.data.reverse())
         toast('Now you see the Data')
-        
       })
       .catch((err) => {
         console.log(err)
@@ -46,14 +46,11 @@ function FormTable() {
               <SearchBar userData={userData} setUserData={setUserData} />
               <tr>
                 {formFields.map((d) => {
-                  return (
-                    <th style={{ minWidth: 200 }}>
-                      {d.label}
-                    </th>
-                  )
+                  return <th style={{ minWidth: 200 }}>{d.label}
+                  </th>
                 })}
               </tr>
-            </thead> 
+            </thead>
             <tbody>
               {currentItem.map((d) => {
                 return (
@@ -61,7 +58,7 @@ function FormTable() {
                     {formFields.map((f) => {
                       return <td>{d[f.name] || <Slash />}</td>
                     })}
-                    
+                      <PdfForm id={d._id} />
                   </tr>
                 )
               })}
