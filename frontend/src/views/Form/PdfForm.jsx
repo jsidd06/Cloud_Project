@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Axios from '../../config/Axios'
+import $ from 'jquery'
 
 function PdfForm({ id }) {
   const [downloadLink, setDownloadLink] = useState(null)
   useEffect(() => {
     if (downloadLink) {
       const a = document.createElement('a')
-      a.href = downloadLink
-      a.download = 'report.pdf'
-      a.target = '_blank'
-      a.click()
+      a.setAttribute('href', downloadLink)
+      a.setAttribute('target', '_blank')
+      a.setAttribute('download', 'report.pdf')
+      const aj = $(a)
+      aj.appendTo('body')
+      aj[0].click()
+      aj.remove()
     }
   }, [downloadLink])
   const submitHandler = () => {
