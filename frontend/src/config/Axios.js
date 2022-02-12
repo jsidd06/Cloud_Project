@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const Axios = axios.create({
-  baseURL: 'http://localhost:5000/',
+  baseURL: 'https://siddjain-business.herokuapp.com/',
   headers: {
     Authorization: 'Bearer ' + localStorage.getItem('token'),
   },

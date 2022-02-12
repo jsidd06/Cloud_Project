@@ -12,7 +12,9 @@ function PdfForm({ id }) {
       a.setAttribute('download', 'report.pdf')
       const aj = $(a)
       aj.appendTo('body')
-      aj[0].click()
+      setTimeout(() => {
+        aj[0].click()
+      }, 1000)
       aj.remove()
     }
   }, [downloadLink])
