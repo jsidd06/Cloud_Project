@@ -89,25 +89,32 @@ app.post("/signup", (req, res) => {
 app.post("/submit-from", isAuthenticated, (req, res) => {
   let formid = null;
   fs.readFile("formid.txt", (err, data) => {
-    console.log(data);
+    const date = new Date();
+    let result = date.toLocaleDateString("en-IN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    const [day, month, year] = result.split("/");
+    const YearMonth = `${year}${month}${day}`;
     if (!data) {
-      fs.writeFile("formid.txt", "10000", (err) => {
+      fs.writeFile("formid.txt", "1", (err) => {
         if (err) {
           console.log(err);
           return;
         }
-        formid = 10000;
+        formid = `${YearMonth}1`;
       });
     } else {
       const currentIdCounter = parseInt(data);
       const nextIdCounter = currentIdCounter + 1;
-      console.log("next counter", nextIdCounter);
-      fs.writeFile("formid.txt", String(nextIdCounter), (err) => {
+      const finalNextFormId = `${YearMonth}${nextIdCounter}`;
+      fs.writeFile("formid.txt", String(finalNextFormId), (err) => {
         if (err) {
           console.log(err);
           return;
         }
-        formid = nextIdCounter;
+        formid = finalNextFormId;
       });
     }
   });
