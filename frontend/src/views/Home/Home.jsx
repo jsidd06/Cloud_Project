@@ -2,11 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../../Components/data/Layout'
 import Video from "../../video/list.mp4"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 function Home() {
   return (
     <Layout>
       <div className="mt-5 p-2" style={{ textAlign: 'center' }}>
         <h1>Welcome to Add Your Own Business List</h1>
+        <FontAwesomeIcon icon="fa-solid fa-pen-to-square"  />
         <Link className="btn btn-warning mt-5" to="/form">
           Click here to Start
         </Link>

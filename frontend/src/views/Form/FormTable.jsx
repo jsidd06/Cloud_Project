@@ -46,7 +46,11 @@ function FormTable() {
               <SearchBar userData={userData} setUserData={setUserData} />
               <tr>
                 {formFields.map((d) => {
-                  return <th style={{ minWidth: 200 }}>{d.label}</th>
+                  return (
+                    <th style={{ minWidth: 200 }}>
+                      {d.label}
+                    </th>
+                  )
                 })}
               </tr>
             </thead> 
@@ -57,6 +61,7 @@ function FormTable() {
                     {formFields.map((f) => {
                       return <td>{d[f.name] || <Slash />}</td>
                     })}
+                    
                   </tr>
                 )
               })}

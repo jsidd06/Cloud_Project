@@ -14,7 +14,6 @@ function App() {
         <Route path="/formtable" element={<FormTable />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/logout" element={<Logout />} /> */}
       </Routes>
     </BrowserRouter>
   )
