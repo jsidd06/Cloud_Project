@@ -46,9 +46,9 @@ function FormTable() {
               <SearchBar userData={userData} setUserData={setUserData} />
               <tr>
                 {formFields.map((d) => {
-                  return <th style={{ minWidth: 200 }}>{d.label}
-                  </th>
+                  return <th style={{ minWidth: 200 }}>{d.label}</th>
                 })}
+                <th>Pdf Download</th>
               </tr>
             </thead>
             <tbody>
@@ -58,7 +58,7 @@ function FormTable() {
                     {formFields.map((f) => {
                       return <td>{d[f.name] || <Slash />}</td>
                     })}
-                      <PdfForm id={d._id} />
+                    <PdfForm id={d._id} />
                   </tr>
                 )
               })}
