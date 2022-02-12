@@ -46,7 +46,7 @@ function Login() {
     <Layout>
       <Card>
         <CardHeader>
-          <CardTitle>Signup</CardTitle>
+          <CardTitle>Login</CardTitle>
         </CardHeader>
         <Form>
           <CardBody>

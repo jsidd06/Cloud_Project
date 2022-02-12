@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Navbar,
@@ -20,10 +20,15 @@ function Header() {
     localStorage.removeItem('name')
     window.location.href = '/login'
   }
+  const [open, setOpen] = useState(false)
   return (
     <Fragment>
       <Navbar color="light" expand="md" light>
-        <Collapse navbar>
+        <NavbarBrand className="me-auto" href="/">
+          Business List
+        </NavbarBrand>
+        <NavbarToggler className="m2-2" onClick={() => setOpen(!open)} />
+        <Collapse navbar isOpen={open}>
           <Nav className="me-auto" navbar>
             <NavItem>
               <NavLink href="/">Home</NavLink>
@@ -47,7 +52,9 @@ function Header() {
                 </span>
               </>
             ) : (
-              <Link className="btn btn-default" to="/login">Login</Link>
+              <Link className="btn btn-default" to="/login">
+                Login
+              </Link>
             )}
           </NavbarText>
         </Collapse>

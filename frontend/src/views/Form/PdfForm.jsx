@@ -32,7 +32,7 @@ function PdfForm({ id }) {
   return (
     <div>
       <i
-        style={{ fontSize: 20 }}
+        style={{ fontSize: 20, cursor: 'pointer' }}
         className="fa-solid fa-file-pdf text-danger"
         onClick={submitHandler}
       ></i>
