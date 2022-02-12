@@ -5,22 +5,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-1" />
     <title>Hello world!</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Form Report</h1>
-    <ul>
-        {{#each forms}}
-        <li>Name: {{this.username}}</li>
-        <li>Age: {{this.gst}}</li>
-        <li>Email: {{this.email}}</li>
-        <li>UPI ID: {{this.upi_id}}</li>
-        <li>Phone: {{this.phone}}</li>
-        <li>Address: {{this.address}}</li>
-        <li>City: {{this.city}}</li>
-        <li>State: {{this.pin_code}}</li>
-        <li>Zip: {{this.zip_code}}</li>
-        <li>Country: {{this.country}}</li>
-        <br />
+    <h1 style="text-align: center;">Form Report
+    </h1>
+    <ul style="border: 3px solid #424242; padding : 1em; list-style: none;">
+        {{#each data}}
+        <li style="border: 2px solid #ccc; padding: .5em; margin : 10px"><b>{{@key}}</b> :- {{this}}</li>
         {{/each}}
     </ul>
 </body>

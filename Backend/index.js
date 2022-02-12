@@ -87,11 +87,35 @@ app.post("/signup", (req, res) => {
 
 // get all forms  data submit with authentication
 app.post("/submit-from", isAuthenticated, (req, res) => {
+  let formid = null;
+  fs.readFile("formid.txt", (err, data) => {
+    console.log(data);
+    if (!data) {
+      fs.writeFile("formid.txt", "10000", (err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        formid = 10000;
+      });
+    } else {
+      const currentIdCounter = parseInt(data);
+      const nextIdCounter = currentIdCounter + 1;
+      console.log("next counter", nextIdCounter);
+      fs.writeFile("formid.txt", String(nextIdCounter), (err) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        formid = nextIdCounter;
+      });
+    }
+  });
   User.findOne({ username: req.user.username }, (err, user) => {
     if (err) {
       res.send(err);
     } else if (user) {
-      user.forms.push({ ...req.body, _id: nanoid() });
+      user.forms.push({ ...req.body, _id: formid });
       user.save((err, doc) => {
         if (err) {
           res.send(err);
@@ -144,12 +168,19 @@ app.post("/report/generate-pdf", isAuthenticated, (req, res) => {
     border: "10mm",
     header: {
       height: "45mm",
-      contents: `<div style="text-align: center;">Report : ${req.user.username}</div>`,
+      contents: `<div >
+      <div><b>Form ID</b> :- <span style="margin-left : 10px">${formid}</span></div>
+      <div><b>Username</b> :- <span style="margin-left : 10px">${
+        req.user.username
+      }</span></div>  
+      <div><b>Full Name</b> :- <span style="margin-left : 10px">${req.user.firstName.toUpperCase()} ${req.user.lastName.toUpperCase()}</span></div>
+      <div><b>Date & Time</b> :- <span style="margin-left : 10px">${new Date()}</span></div>
+      </div>`,
     },
     footer: {
       height: "28mm",
       contents: {
-        first: `${req.user.firstName.toUpperCase()} ${req.user.lastName.toUpperCase()}`,
+        first: ``,
         2: "Second page", // Any page number is working. 1-based index
         default:
           '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
@@ -163,16 +194,12 @@ app.post("/report/generate-pdf", isAuthenticated, (req, res) => {
     } else if (user) {
       const forms = user.forms;
       const form = forms.find((form) => form._id == formid);
-
+      delete form["_id"];
       if (form) {
-        let finalForm = {};
-        formFields.map((f) => {
-          finalForm[f.name] = form[f.name] || "N/A";
-        });
         var document = {
           html: html,
           data: {
-            forms: [finalForm],
+            data: form,
           },
           path: `./reports/${req.user.username}/${fileName}.pdf`,
           type: "",
