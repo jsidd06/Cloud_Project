@@ -210,6 +210,31 @@ app.post("/report/generate-pdf", isAuthenticated, (req, res) => {
   });
 });
 
+// api forget password
+// app.post("/forget-password",isAuthenticated, (req, res) => {
+//   const { email } = req.body;
+//   User.findOne({ email }, (err, user) => {
+//     if (err) {
+//       res.send(err);
+//     } else if (user) {
+//       const token = generateToken(user);
+//       const url = `http://localhost:3000/reset-password/${token}`;
+//       const mailOptions = {
+//         from: "" + process.env.EMAIL_USER,
+//         to: email,
+//         subject: "Reset Password",
+// }), (err, info) => {
+//         if (err) {
+//           res.send(err);
+//         } else {
+//           res.send("mail send");
+//         }
+//       }
+//     } else {
+//       res.send("user not found");
+//     } 
+// }
+
 app.listen(process.env.PORT || 5000, () => {
   console.log("connect with Port 5000");
 });
