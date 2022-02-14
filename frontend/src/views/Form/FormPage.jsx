@@ -109,8 +109,12 @@ function FormPage() {
             { label: 'Text', value: 'text' },
             { label: 'Email', value: 'email' },
             { label: 'Number', value: 'number' },
-            { label: 'Password', value: 'password' },
             { label: 'Username', value: 'username' },
+            { label: 'Date', value: 'date' },
+            { label: 'Time', value: 'time' },
+            { label: 'Textarea', value: 'textarea' },
+            { label: 'Radio', value: 'radio' },
+            { label: 'Hidden', value: 'hidden' },
           ]}
           onChange={(e) =>
             setNewFieldData((preValue) => {
